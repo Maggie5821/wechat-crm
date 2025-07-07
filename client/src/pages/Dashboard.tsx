@@ -11,6 +11,7 @@ const Dashboard = () => {
     const fetchProfile = async () => {
       try {
         const res = await api.get('/auth/profile')
+        console.log('Profile data:', res.data) // 调试输出
         setProfile(res.data.user) // 后端返回的是 { user: { email: ... } }
       } catch (err) {
         setError('⚠️ 登录状态无效，请重新登录')
@@ -33,6 +34,8 @@ const Dashboard = () => {
         <div>
           <p>当前登录用户：</p>
           <pre>{JSON.stringify(profile, null, 2)}</pre>
+          <p>邮箱：{profile.email}</p>
+          <button className='button' onClick={()=>{navigate('/users')}}>去用户页面</button>
         </div>
       ) : (
         <p>正在加载个人信息...</p>
