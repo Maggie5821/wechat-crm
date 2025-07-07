@@ -24,7 +24,7 @@ export class AuthService {
 
   async login(body: { email: string; password: string }) {
     const user = await this.validateUser(body.email, body.password);
-    const payload = { email: body.email };  // token 中存储的信息
+    const payload = { email: body.email }; // token 中存储的信息
     return {
       access_token: this.jwtService.sign(payload),
     };

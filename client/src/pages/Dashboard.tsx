@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../api/axios'; // 确保路径正确
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import api from '../api/axios' // 确保路径正确
 
 const Dashboard = () => {
-  const [profile, setProfile] = useState<any>(null);
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [profile, setProfile] = useState<any>(null)
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await api.get('/auth/profile');
-        setProfile(res.data.user); // 后端返回的是 { user: { email: ... } }
+        const res = await api.get('/auth/profile')
+        setProfile(res.data.user) // 后端返回的是 { user: { email: ... } }
       } catch (err) {
-        setError('⚠️ 登录状态无效，请重新登录');
-        localStorage.removeItem('token'); // 清掉 token
-        setTimeout(() => navigate('/'), 1500); // 跳回登录页
+        setError('⚠️ 登录状态无效，请重新登录')
+        localStorage.removeItem('token') // 清掉 token
+        setTimeout(() => navigate('/'), 1500) // 跳回登录页
       }
-    };
+    }
 
-    fetchProfile();
-  }, [navigate]);
+    fetchProfile()
+  }, [navigate])
 
   if (error) {
-    return <div>{error}</div>;
+    return <div>{error}</div>
   }
 
   return (
@@ -38,7 +38,7 @@ const Dashboard = () => {
         <p>正在加载个人信息...</p>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard
