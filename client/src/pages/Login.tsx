@@ -1,24 +1,27 @@
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import api from '../api/axios';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  const navigate = useNavigate();
+  
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:3000/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+      // const res = await fetch('http://localhost:3000/auth/login', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email, password }),
+      // });
+      const res = await api.post('auth/login',{email,password})
+      const { access_token } = res.data
+      localStorage.setItem('token', access_token)
+      alert('✅ 登录成功！Token: ' +access_token);
+      console.log('token', access_token)
+      navigate('/dashboard');
 
-      if (!res.ok) throw new Error('Login failed');
-
-      const data = await res.json();
-      alert('✅ 登录成功！Token: ' + data.token);
-      // TODO: 保存 token，跳转页面
     } catch (err) {
       setError('登录失败，请检查邮箱和密码');
     }
