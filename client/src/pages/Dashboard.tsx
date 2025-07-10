@@ -35,7 +35,15 @@ const Dashboard = () => {
           <p>当前登录用户：</p>
           <pre>{JSON.stringify(profile, null, 2)}</pre>
           <p>邮箱：{profile.email}</p>
-          <button className='button' onClick={()=>{navigate('/users')}}>去用户页面</button>
+          <button
+            type="submit"
+            className="button"
+            onClick={() => {
+              navigate('/users')
+            }}
+          >
+            去用户页面
+          </button>
         </div>
       ) : (
         <p>正在加载个人信息...</p>
